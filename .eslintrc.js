@@ -28,9 +28,9 @@ module.exports = {
     'space-before-function-paren': [
       'error',
       {
-        anonymous: 'always',
-        named: 'always',
-        asyncArrow: 'always',
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'never',
       },
     ],
     quotes: ['error', 'single', { allowTemplateLiterals: true }], //单引号

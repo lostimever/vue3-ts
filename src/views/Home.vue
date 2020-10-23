@@ -17,5 +17,19 @@ import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
     HelloWorld,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  // 字符串索引签名。用任意字符串去索引List，可以得到任意的结果，这样List接口可以支持多个未知属性
+  // [x: string]: any
+
+  // public setup() {
+  //   console.log('测试一下', this.$axios)
+  //   // this.$axios.get()
+  // }
+
+  public mounted() {
+    this.$axios.get('/dmsmarket/publics/dictionaryAll').then((res: {}) => {
+      console.log('Home -> mounted -> res', res)
+    })
+  }
+}
 </script>
