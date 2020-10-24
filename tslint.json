@@ -13,6 +13,7 @@
     "quotemark": [true, "single"],
     "semicolon": [true, "never"],
     "variable-name": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "arrow-parens": [true, "ban-single-arg-parens"]
   }
 }

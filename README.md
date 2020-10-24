@@ -5,8 +5,36 @@
 - [x] 1、初始化项目
 - [x] 2、配置好`eslint`、`tslint`规则
 - [x] 3、利用`babel-plugin-import`按需引入`antd-design-vue`
-- [ ] 4、配置`axios`插件
+- [x] 4、配置`axios`插件
 - [ ] 5、利用`vuex`管理字典
+
+## 遇到的坑
+### `eslint`、`tslint`规则配置
+
+  每个人的使用习惯不一样，搜索到的配置也不一样，需要和`vscode`的`setting.json`一起配置。
+
+### `axios`插件
+- vue2.x
+  `Vue2.x`使用`Plugin.install`和`Object.defineProperties()`将`$axio`s挂载到`vue`实例上，最后`Vue.use(Plugin)`
+- vue3.0
+  `vue3.0`是利用`install`方法来暴露`axios`，[官方文档](https://www.vue3js.cn/docs/zh/guide/plugins.html#%E7%BC%96%E5%86%99%E6%8F%92%E4%BB%B6)中提供了例子。
+  但是，我们用到了`typescript`，即使按照上述方法成功将`$axios`挂载到了`vue`实例上，还需要创建一个`*.d.ts`文件来声明`$axios`属性，否则`eslint`会校验不通过。
+  ```typescript
+    import { App } from 'vue'
+    import { AxiosInstance } from 'axios'
+
+    declare module '@vue/runtime-core' {
+      export interface ComponentCustomProperties {
+        $axios: AxiosStatic
+      }
+
+      export interface App {
+        $axios: AxiosStatic
+      }
+    }
+  ```
+
+  需要注意，和`vue2.x+typescript`不同的地方`'vue/type/vue'`换成了`'@vue/runtime-core'`
 
 
 ## Project setup

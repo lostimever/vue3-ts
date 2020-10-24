@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 2020,
     // sourceMap: "module"
   },
-  plugins: ['prettier', '@typescript-eslint'],
+  plugins: ['prettier'],
   ignorePatterns: ['node_modules/'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     // 在对象的括号后加','符号
     '@typescript-eslint/comma_dangle': 'off',
+    'arrow-parens': [2, 'as-needed', { requireForBlockBody: true }],
     'prefer-const': 'off',
     'space-before-function-paren': [
       'error',

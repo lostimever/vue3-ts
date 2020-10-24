@@ -1,5 +1,6 @@
 semi: false
 singleQuote: true
-proseWrap: "preserve"
+proseWrap: 'preserve'
 tabWidth: 2
-trailingComma: "all"
+trailingComma: 'all'
+arrowParens: 'avoid' ## (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：省略括号

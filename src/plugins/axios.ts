@@ -43,30 +43,28 @@ const errorHandle = (status: number, msg: string) => {
       // 提示资源不存在
       break
     default:
-      console.log(msg)
+    // console.log(msg)
   }
 }
 
 export default {
   // 暴露安装方法
-  install(app: App, config: AxiosRequestConfig = defaultConfig) {
-    let _axios: AxiosInstance
-
+  install: (app: App, config: AxiosRequestConfig = defaultConfig) => {
     // 创建实例
-    _axios = axiosObj.create(config)
+    let _axios: AxiosInstance = axiosObj.create(config)
     // 请求拦截器
     _axios.interceptors.request.use(
-      function(config) {
+      conf => {
         const token = '5b6deea38acf451f88519660f36fea58'
         // 从vuex里获取token
         // const token = store.state.token
         // 如果token存在就在请求头里添加
         if (token) {
-          config.headers.token = token
+          conf.headers.token = token
         }
-        return config
+        return conf
       },
-      function(error) {
+      error => {
         // Do something with request error
         error.data = {}
         error.data.msg = '服务器异常'
@@ -75,7 +73,7 @@ export default {
     )
     // 响应拦截器
     _axios.interceptors.response.use(
-      function(response) {
+      response => {
         // 清除本地存储中的token,如果需要刷新token，在这里通过旧的token跟服务器换新token，将新的token设置的vuex中
         if (response.data.code === 401) {
           localStorage.removeItem('token')
@@ -85,7 +83,7 @@ export default {
         // 只返回response中的data数据
         return response.data
       },
-      function(error) {
+      error => {
         if (error) {
           // 请求已发出，但不在2xx范围内
           errorHandle(error.status, error.data.msg)
@@ -98,5 +96,6 @@ export default {
     )
     // 将axios挂载到vue的全局属性中
     app.config.globalProperties.$axios = _axios
+    window.$axios = _axios
   },
 }
