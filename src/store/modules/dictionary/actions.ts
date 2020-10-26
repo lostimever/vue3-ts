@@ -10,7 +10,7 @@ type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
     key: K,
     LoadData: Parameters<Mutations[K]>[1],
-  ): ReturnType<Mutations[K]>,
+  ): ReturnType<Mutations[K]>
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export interface Actions {
@@ -23,12 +23,12 @@ export interface Actions {
 export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.GET_DICTIONARY]({ commit }) {
     return new Promise((resolve, reject) => {
-      window.$axios.get(allDicUrl).then((res: any) => {
-        if (res && res.data.resultCode === 200) {
-          commit(MutationTypes.SET_DICTIONARY, res.data.data)
-          resolve(res.data.data)
+      window.$axios.get(allDicUrl).then((data: any) => {
+        if (data && data.resultCode === 200) {
+          commit(MutationTypes.SET_DICTIONARY, data.data)
+          resolve()
         } else {
-          reject(`获取字典失败，${res.data.message}`)
+          reject(`获取字典失败，${data.message}`)
         }
       })
     })

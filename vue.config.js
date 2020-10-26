@@ -1,4 +1,11 @@
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/main.ts',
+      template: 'public/index.html',
+      title: '管理系统',
+    },
+  },
   css: {
     loaderOptions: {
       less: {

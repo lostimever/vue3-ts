@@ -14,6 +14,7 @@
     "semicolon": [true, "never"],
     "variable-name": false,
     "prefer-const": false,
-    "arrow-parens": [true, "ban-single-arg-parens"]
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
   }
 }

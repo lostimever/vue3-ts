@@ -1,4 +1,4 @@
-# app
+# 后台管理
 
 打算用`vue3+typescript+vuex+antd-design-vue`做一个后台管理页面
 对于目前来说，跨度有点大，有点难度
@@ -6,7 +6,7 @@
 - [x] 2、配置好`eslint`、`tslint`规则
 - [x] 3、利用`babel-plugin-import`按需引入`antd-design-vue`
 - [x] 4、配置`axios`插件
-- [ ] 5、利用`vuex`管理字典
+- [x] 5、利用`vuex`管理字典
 
 ## 遇到的坑
 ### `eslint`、`tslint`规则配置
@@ -38,7 +38,7 @@
     }
   ```
 
-  需要注意，和`vue2.x+typescript`不同的地方`'vue/type/vue'`换成了`'@vue/runtime-core'`
+  需要注意，和`vue2.x`不同的地方`'vue/type/vue'`换成了`'@vue/runtime-core'`
 
 ### `vue-class-component`
   截止至该项目启动时，`vue-class-component`还没有完全支持`vue3.0`，文档也不完整，只能摸索着写。
