@@ -45,7 +45,14 @@ import {
 } from '@ant-design/icons-vue'
 @Options({
   props: ['collapsed'],
-  components: {},
+  components: {
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
+    MailOutlined,
+  },
   data() {
     return {
       // collapsed: false,
@@ -55,8 +62,11 @@ import {
 })
 export default class SideBar extends Vue {
   // private collapsed: boolean
-  private checkMenu({ key }): void {
-    console.log('ceshi')
+  // private checkMenu(item: any): void {
+  //   console.log('ceshi', item.key)
+  // }
+  private checkMenu({ key }: any): void {
+    console.log('ceshi', key)
   }
 }
 </script>
