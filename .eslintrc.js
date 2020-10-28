@@ -25,7 +25,7 @@ module.exports = {
     // 在对象的括号后加','符号
     // '@typescript-eslint/comma_dangle': [1, 'only-multiline'],
     // 'comma-dangle': [2, 'never'],
-    'arrow-parens': [2, 'as-needed', { requireForBlockBody: true }],
+    // 'arrow-parens': [2, 'as-needed', { requireForBlockBody: true }],
     'prefer-const': 'off',
     'space-before-function-paren': [
       'error',

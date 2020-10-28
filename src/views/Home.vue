@@ -17,7 +17,6 @@
           minHeight: '280px',
         }"
       >
-        Content
         <router-view />
       </a-layout-content>
     </a-layout>

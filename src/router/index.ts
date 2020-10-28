@@ -6,6 +6,14 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: '/elemeter',
+    children: [
+      {
+        path: '/elemeter',
+        name: 'elemeter',
+        component: () => import('../views/document/EleMeter.vue'),
+      },
+    ],
   },
   {
     path: '/about',
