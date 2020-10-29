@@ -1,20 +1,20 @@
 <template>
   <div>
     <div class="opt">
-      <a-form :model="form" layout="inline" ref="forms">
-        <a-form-item label="电表编号">
+      <a-form :model="form" layout="inline" ref="forms" :locale="locale">
+        <a-form-item label="电表编号" name="meaternum">
           <a-input
             v-model:value="form.meaternum"
             placeholder="请输入电表编号"
           />
         </a-form-item>
-        <a-form-item label="制造商">
+        <a-form-item label="制造商" name="manufacturer">
           <a-input
             v-model:value="form.manufacturer"
             placeholder="请输入制造商"
           />
         </a-form-item>
-        <a-form-item label="电表类型">
+        <a-form-item label="电表类型" name="meatertype">
           <a-select
             v-model:value="form.meatertype"
             placeholder="请选择电表类型"
@@ -47,6 +47,7 @@
       :pagination="pagination"
       @change="handleTableChange"
       :scroll="{ y: 600 }"
+      :rowKey="columnId"
     >
       <template v-slot:meatertype="{ text }">
         <span>{{ getMeterTypeName(text) }}</span>
@@ -64,14 +65,17 @@
       </template>
     </a-table>
   </div>
+  <meter-form ref="meter"></meter-form>
 </template>
 
 <script lang="ts">
 import { Options, Vue, setup } from 'vue-class-component'
 import { ref, reactive, onBeforeUpdate } from 'vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import MeterForm from '@/components/document/MeterForm.vue'
 
 @Options({
+  components: { MeterForm },
   computed: {
     ...mapState('dictionary', {
       meterType: (state: any) => state.meterType,
@@ -79,6 +83,13 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
     }),
     ...mapGetters('dictionary', ['getMeterTypeName', 'getVolTypeName']),
   },
+  provide() {
+    // return {
+    //   meterType: '11111',
+    // }
+  },
+  inject: ['locale'],
+
   // setup() {
   //   const forms = ref()
   //   console.log('setup -> forms', forms)
@@ -90,6 +101,7 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default class EleMeter extends Vue {
   public $refs!: {
     forms: HTMLFormElement
+    meter: HTMLFormElement
   }
   private columns = [
     {
@@ -186,6 +198,10 @@ export default class EleMeter extends Vue {
     this.getRecordData()
   }
 
+  private columnId(record: any) {
+    return record.meaternum
+  }
+
   private getRecordData() {
     let formItem = this.form
     this.$axios
@@ -215,7 +231,7 @@ export default class EleMeter extends Vue {
   }
 
   private openModal(record: any) {
-    console.log('EleMeter -> openModal -> record', record)
+    this.$refs.meter.show(record)
   }
   private remove(id: number) {
     this.axios
@@ -234,8 +250,6 @@ export default class EleMeter extends Vue {
       })
   }
   private reset() {
-    console.log('重置', this.$refs.forms.resetFields)
-
     this.$refs.forms.resetFields()
   }
 }

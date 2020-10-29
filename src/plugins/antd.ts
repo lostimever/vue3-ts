@@ -4,6 +4,8 @@ import {
   message,
   Button,
   Col,
+  ConfigProvider,
+  DatePicker,
   Input,
   Layout,
   Modal,
@@ -18,6 +20,8 @@ import {
 const app = createApp(App)
 app.use(Button)
 app.use(Col)
+app.use(ConfigProvider)
+app.use(DatePicker)
 app.use(Input)
 app.use(Layout)
 app.use(Modal)

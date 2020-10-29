@@ -1,6 +1,6 @@
-# 后台管理
+# 后台管理系统模板
 
-打算用`vue3+typescript+vuex+antd-design-vue`做一个后台管理页面
+打算用`vue3+typescript+vuex+antd-design-vue`做一个后台管理系统模板
 对于目前来说，跨度有点大，有点难度
 - [x] 1、初始化项目
 - [x] 2、配置好`eslint`、`tslint`规则
@@ -46,8 +46,74 @@
 
 ### `vuex4.0`
   参考文档：
+
   1、[vuex-typescript-m4j](https://dev.to/3vilarthas/vuex-typescript-m4j)
   2、[whats-new-in-vuex-4](https://blog.logrocket.com/whats-new-in-vuex-4/)
+
+### [antd-design-vue](https://2x.antdv.com/docs/vue/introduce-cn/)
+  1、`typescript`中使用`$refs`，`eslint`校验不通过
+  解决方案：
+
+  ```typescript
+    export default class ClassName extends Vue {
+      public $refs!: {
+        forms: HTMLFormElement
+      }
+    }
+  ```
+
+  2、`table`告警
+
+  ```
+    warning.js?2149:6 Warning: [antdv: Each record in table should have a unique `key` prop,or set `rowKey` to an unique primary key.]
+    warning.js?2149:6 Warning: [antdv: Table] Each record in dataSource of table should have a unique `key` prop, or set `rowKey` of Table to an unique primary key,
+  ```
+  解决方案：
+
+  添加属性`rowKey`
+
+  ```html
+    <a-table
+      :columns="columns"
+      :data-source="recordData"
+      bordered
+      :pagination="pagination"
+      @change="handleTableChange"
+      :scroll="{ y: 600 }"
+      :rowKey="columnId"
+    >
+  ```
+  ```typescript
+    private columnId(record: any) {
+      return record.id
+    }
+  ```
+
+  3、LocaleProvider
+
+  引入`import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN'`会出现如下情况：
+
+  ```
+    Could not find a declaration file for module 'ant-design-vue/es/date-picker/locale/zh_CN'.
+    Try npm install @types/ant-design-vue if it exists or add a new declaration (.d.ts) file containing declare module 'ant-design-vue/es/date-picker/locale/zh_CN';
+  ```
+
+  需要在`*.d.ts`文件中添加声明：
+  ```typescript
+    interface zhCN {
+      [key: string]: any
+    }
+    declare module 'ant-design-vue/es/date-picker/locale/zh_CN' {
+      import zh from 'ant-design-vue/es/date-picker/locale/zh_CN'
+      const zh_CN: zhCN
+
+      export default zh_CN
+    }
+  ```
+
+  [参考](https://github.com/vueComponent/ant-design-vue/issues/1428)
+
+  另外按需引入的时候，`LocaleProvider`需要替换成`ConfigProvider`
 
 ## Project setup
 ```
