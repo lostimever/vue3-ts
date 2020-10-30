@@ -5,6 +5,7 @@
     @ok="handleOk"
     :rules="rules"
     width="700px"
+    :maskClosable="false"
   >
     <a-form
       ref="forms"
@@ -177,6 +178,14 @@
         </a-col>
       </a-row>
     </a-form>
+    <template v-slot:footer>
+      <a-button key="back" @click="handleCancel">
+        取消
+      </a-button>
+      <a-button key="submit" type="primary" @click="handleOk">
+        确定
+      </a-button>
+    </template>
   </a-modal>
 </template>
 <script lang="ts">
@@ -195,8 +204,39 @@ import { mapState, mapGetters } from 'vuex'
 export default class MeterForm extends Vue {
   private visible = false
   private title = '新增'
+  // private validateInstall = (rule: any, value: any) => {
+  //   let manufacturedate =
+  //     this.formItem.manufacturedate && this.formItem.manufacturedate.valueOf()
+  //   if (manufacturedate > value.valueOf()) {
+  //     return Promise.reject('安装日期不可在生产日期之前')
+  //   }
 
-  private rules = {}
+  //   return Promise.resolve()
+  // }
+  // private validateManufact = (rule: any, value: any) => {
+  //   let installdate =
+  //     this.formItem.installdate && this.formItem.installdate.valueOf()
+  //   if (installdate && installdate < value.valueOf()) {
+  //     return Promise.reject('生产日期不可在安装日期之后')
+  //   }
+  //   return Promise.resolve()
+  // }
+
+  private rules = {
+    meaternum: [
+      {
+        required: true,
+        message: '电表编号不能为空',
+        trigger: 'blur',
+      },
+    ],
+    manufacturedate: [
+      {
+        // validator: this.validateManufact,
+        trigger: 'change',
+      },
+    ],
+  }
   private formItem = {
     id: '',
     meaternum: '',
@@ -221,7 +261,11 @@ export default class MeterForm extends Vue {
     )
     this.formItem.installdate = this.$moment(new Date()).format('YYYY-MM-DD')
   }
+
   private handleOk() {
+    this.visible = false
+  }
+  private handleCancel() {
     this.visible = false
   }
 }
