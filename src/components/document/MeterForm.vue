@@ -8,7 +8,7 @@
     :maskClosable="false"
   >
     <a-form
-      ref="forms"
+      ref="modalForm"
       :model="formItem"
       :label-col="{ span: 8 }"
       :wrapper-col="{ span: 16 }"
@@ -17,7 +17,7 @@
         <a-col :span="12">
           <a-form-item label="电表编号" name="meaternum">
             <a-input
-              v-model="formItem.meaternum"
+              v-model:value="formItem.meaternum"
               placeholder="请输入电表编号"
             ></a-input>
           </a-form-item>
@@ -25,7 +25,7 @@
         <a-col :span="12">
           <a-form-item label="制造商" name="manufacturer">
             <a-input
-              v-model="formItem.manufacturer"
+              v-model:value="formItem.manufacturer"
               placeholder="请输入制造商"
             />
           </a-form-item>
@@ -35,7 +35,7 @@
         <a-col :span="12">
           <a-form-item label="生产日期" name="manufacturedate">
             <a-date-picker
-              v-model="formItem.manufacturedate"
+              v-model:value="formItem.manufacturedate"
               placeholder="请选择生产日期"
               :locale="locale"
             >
@@ -45,7 +45,7 @@
         <a-col :span="12">
           <a-form-item label="安装日期" name="installdate">
             <a-date-picker
-              v-model="formItem.installdate"
+              v-model:value="formItem.installdate"
               placeholder="请选择安装日期"
               :locale="locale"
             >
@@ -93,7 +93,7 @@
         <a-col span="12">
           <a-form-item label="额定电流：" name="ratedcurrent">
             <a-input
-              v-model="formItem.ratedcurrent"
+              v-model:value="formItem.ratedcurrent"
               placeholder="请输入额定电流"
               number
             >
@@ -106,7 +106,7 @@
         <a-col span="12">
           <a-form-item label="最大电流：" name="maxcurrent">
             <a-input
-              v-model="formItem.maxcurrent"
+              v-model:value="formItem.maxcurrent"
               placeholder="请输入最大电流"
               number
             >
@@ -121,7 +121,7 @@
         <a-col span="12">
           <a-form-item label="频率：" name="frequency">
             <a-input
-              v-model="formItem.frequency"
+              v-model:value="formItem.frequency"
               placeholder="请输入频率"
               number
             >
@@ -133,7 +133,11 @@
         </a-col>
         <a-col span="12">
           <a-form-item label="电表倍率：" name="k">
-            <a-input v-model="formItem.k" placeholder="请输入电表倍率" number />
+            <a-input
+              v-model:value="formItem.k"
+              placeholder="请输入电表倍率"
+              number
+            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -141,7 +145,7 @@
         <a-col span="12">
           <a-form-item label="改造前示数：" name="olddisplayvalue">
             <a-input
-              v-model="formItem.olddisplayvalue"
+              v-model:value="formItem.olddisplayvalue"
               placeholder="请输入改造前示数"
               number
             />
@@ -150,7 +154,7 @@
         <a-col span="12">
           <a-form-item label="改造后示数：" name="displayvalue">
             <a-input
-              v-model="formItem.displayvalue"
+              v-model:value="formItem.displayvalue"
               placeholder="请输入改造后示数"
               number
             />
@@ -161,7 +165,7 @@
         <a-col span="12">
           <a-form-item label="用电地址：" name="address">
             <a-input
-              v-model="formItem.address"
+              v-model:value="formItem.address"
               placeholder="请输入用电地址"
               number
             />
@@ -170,7 +174,7 @@
         <a-col span="12">
           <a-form-item label="资产编号：" name="anlh">
             <a-input
-              v-model="formItem.anlh"
+              v-model:value="formItem.anlh"
               placeholder="请输入资产编号"
               number
             />
@@ -189,8 +193,14 @@
   </a-modal>
 </template>
 <script lang="ts">
+import { reactive, ref } from 'vue'
 import { Options, Vue, setup } from 'vue-class-component'
 import { mapState, mapGetters } from 'vuex'
+
+interface FormItems {
+  [key: string]: any
+  [index: number]: any
+}
 
 @Options({
   computed: {
@@ -202,6 +212,10 @@ import { mapState, mapGetters } from 'vuex'
   inject: ['locale'],
 })
 export default class MeterForm extends Vue {
+  // public formItem = setup(() => formData())
+  public $refs!: {
+    modalForm: HTMLFormElement
+  }
   private visible = false
   private title = '新增'
   // private validateInstall = (rule: any, value: any) => {
@@ -237,7 +251,8 @@ export default class MeterForm extends Vue {
       },
     ],
   }
-  private formItem = {
+
+  private formItem: FormItems = {
     id: '',
     meaternum: '',
     manufacturer: '',
@@ -254,18 +269,34 @@ export default class MeterForm extends Vue {
     address: '',
     anlh: '',
   }
-  public show() {
+  private formItemCopy: FormItems = {}
+  public show(data: any) {
+    this.formItemCopy = Object.assign(this.formItem, {})
+    console.log('MeterForm -> show -> data', data)
     this.visible = true
-    this.formItem.manufacturedate = this.$moment(new Date()).format(
-      'YYYY-MM-DD',
-    )
-    this.formItem.installdate = this.$moment(new Date()).format('YYYY-MM-DD')
+    if (data) {
+      for (const key of Object.keys(this.formItem)) {
+        this.formItem[key] = data[key]
+      }
+      this.title = '编辑'
+    } else {
+      this.formItem = Object.assign(this.formItemCopy, {})
+      this.formItem.manufacturedate = this.$moment(new Date()).format(
+        'YYYY-MM-DD',
+      )
+      this.formItem.installdate = this.$moment(new Date()).format('YYYY-MM-DD')
+    }
   }
 
   private handleOk() {
+    console.log('submit', this.formItem)
+
     this.visible = false
+    this.$refs.modalForm.resetFields()
   }
   private handleCancel() {
+    this.$refs.modalForm.resetFields()
+    // console.log('cancel', this.formItem)
     this.visible = false
   }
 }

@@ -7,6 +7,7 @@
 - [x] 3、利用`babel-plugin-import`按需引入`antd-design-vue`
 - [x] 4、配置`axios`插件
 - [x] 5、利用`vuex`管理字典
+- [ ] 6、`antd-design-vue`常用组件的使用
 
 ## 遇到的坑
 ### `eslint`、`tslint`规则配置
@@ -91,11 +92,11 @@
 
   3、LocaleProvider
 
-  引入`import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN'`会出现如下情况：
+  引入`import zhCN from 'ant-design-vue/es/locale/zh_CN'`会出现如下情况：
 
   ```
-    Could not find a declaration file for module 'ant-design-vue/es/date-picker/locale/zh_CN'.
-    Try npm install @types/ant-design-vue if it exists or add a new declaration (.d.ts) file containing declare module 'ant-design-vue/es/date-picker/locale/zh_CN';
+    Could not find a declaration file for module 'ant-design-vue/es/locale/zh_CN'.
+    Try npm install @types/ant-design-vue if it exists or add a new declaration (.d.ts) file containing declare module 'ant-design-vue/es/locale/zh_CN';
   ```
 
   需要在`*.d.ts`文件中添加声明：
@@ -103,8 +104,8 @@
     interface zhCN {
       [key: string]: any
     }
-    declare module 'ant-design-vue/es/date-picker/locale/zh_CN' {
-      import zh from 'ant-design-vue/es/date-picker/locale/zh_CN'
+    declare module 'ant-design-vue/es/locale/zh_CN' {
+      import zh from 'ant-design-vue/es/locale/zh_CN'
       const zh_CN: zhCN
 
       export default zh_CN

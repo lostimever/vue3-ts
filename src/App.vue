@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
 
 @Options({
   provide() {

@@ -1860,10 +1860,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.0.0-beta.10:
-  version "2.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-2.0.0-beta.10.tgz#66ecfe029458b12d276139bd7fe27a4624af3c75"
-  integrity sha512-32ZewKAvFBboluvBMsO7Y15LEWxnh2SO/J/h9Sq1qUEXqVt/HXwyg1KmFnSz2kc5j6Av5UtVjLu8rzHdZAOtTw==
+ant-design-vue@^2.0.0-beta.15:
+  version "2.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-2.0.0-beta.15.tgz#3c787dabb70a33885d0e751e58f9a5610ed06134"
+  integrity sha512-OxZy+ZYU3LauIL4Rhqwy441K/iD++Cit6upnQy5+LVUrX0PSObPqPqMWVpncbAmJJYTEz88gkvgGeYqBdzouWA==
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^5.1.5"
@@ -1891,6 +1891,7 @@ ant-design-vue@^2.0.0-beta.10:
     scroll-into-view-if-needed "^2.2.25"
     shallow-equal "^1.0.0"
     shallowequal "^1.0.2"
+    vue-types "^3.0.0"
     warning "^4.0.0"
 
 any-promise@^1.0.0:
@@ -5274,6 +5275,11 @@ is-plain-obj@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/is-plain-obj/download/is-plain-obj-1.1.0.tgz?cache=0&sync_timestamp=1602541485176&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-plain-obj%2Fdownload%2Fis-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
+
+is-plain-object@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-3.0.1.tgz#662d92d24c0aa4302407b0d45d21f2251c85f85b"
+  integrity sha512-Xnpx182SBMrr/aBik8y+GuR4U1L9FqMSojwDQwPMmxyC6bvEqly9UBCxhauBF5vNh2gwWJNX6oDV7O+OM4z34g==
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
@@ -8876,6 +8882,13 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
+
+vue-types@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-3.0.1.tgz#20e9baae8673de8093d0a989234695d08d544be0"
+  integrity sha512-UbvbzPu8DNzZRfMB1RDTFKBB6seMm80scMFdP+GkKaw00EugC3cjq9AtlS4y258vDkpAe9HfqbRO4cp63qVHXQ==
+  dependencies:
+    is-plain-object "3.0.1"
 
 vue@^3.0.0:
   version "3.0.2"

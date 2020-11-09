@@ -11,6 +11,10 @@ declare module '@vue/runtime-core' {
     $axios: AxiosStatic
     [key: string]: any
   }
+
+  export interface $refs {
+    modalForm: HTMLFormElement
+  }
 }
 
 declare global {
