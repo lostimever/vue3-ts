@@ -13,6 +13,11 @@ const routes: RouteRecordRaw[] = [
         name: 'elemeter',
         component: () => import('../views/document/EleMeter.vue'),
       },
+      {
+        path: '/eleuser',
+        name: 'eleuser',
+        component: () => import('../views/document/Eleuser.vue'),
+      },
     ],
   },
   {

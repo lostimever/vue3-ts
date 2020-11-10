@@ -3,13 +3,13 @@
     :title="title"
     v-model:visible="visible"
     @ok="handleOk"
-    :rules="rules"
     width="700px"
     :maskClosable="false"
   >
     <a-form
       ref="modalForm"
       :model="formItem"
+      :rules="rules"
       :label-col="{ span: 8 }"
       :wrapper-col="{ span: 16 }"
     >
@@ -38,6 +38,7 @@
               v-model:value="formItem.manufacturedate"
               placeholder="请选择生产日期"
               :locale="locale"
+              :format="dateFormat"
             >
             </a-date-picker>
           </a-form-item>
@@ -48,6 +49,7 @@
               v-model:value="formItem.installdate"
               placeholder="请选择安装日期"
               :locale="locale"
+              :format="dateFormat"
             >
             </a-date-picker>
           </a-form-item>
@@ -91,7 +93,7 @@
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-item label="额定电流：" name="ratedcurrent">
+          <a-form-item label="额定电流" name="ratedcurrent">
             <a-input
               v-model:value="formItem.ratedcurrent"
               placeholder="请输入额定电流"
@@ -104,7 +106,7 @@
           </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-item label="最大电流：" name="maxcurrent">
+          <a-form-item label="最大电流" name="maxcurrent">
             <a-input
               v-model:value="formItem.maxcurrent"
               placeholder="请输入最大电流"
@@ -119,7 +121,7 @@
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-item label="频率：" name="frequency">
+          <a-form-item label="频率" name="frequency">
             <a-input
               v-model:value="formItem.frequency"
               placeholder="请输入频率"
@@ -132,7 +134,7 @@
           </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-item label="电表倍率：" name="k">
+          <a-form-item label="电表倍率" name="k">
             <a-input
               v-model:value="formItem.k"
               placeholder="请输入电表倍率"
@@ -143,7 +145,7 @@
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-item label="改造前示数：" name="olddisplayvalue">
+          <a-form-item label="改造前示数" name="olddisplayvalue">
             <a-input
               v-model:value="formItem.olddisplayvalue"
               placeholder="请输入改造前示数"
@@ -152,7 +154,7 @@
           </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-item label="改造后示数：" name="displayvalue">
+          <a-form-item label="改造后示数" name="displayvalue">
             <a-input
               v-model:value="formItem.displayvalue"
               placeholder="请输入改造后示数"
@@ -163,7 +165,7 @@
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-item label="用电地址：" name="address">
+          <a-form-item label="用电地址" name="address">
             <a-input
               v-model:value="formItem.address"
               placeholder="请输入用电地址"
@@ -172,7 +174,7 @@
           </a-form-item>
         </a-col>
         <a-col span="12">
-          <a-form-item label="资产编号：" name="anlh">
+          <a-form-item label="资产编号" name="anlh">
             <a-input
               v-model:value="formItem.anlh"
               placeholder="请输入资产编号"
@@ -216,41 +218,10 @@ export default class MeterForm extends Vue {
   public $refs!: {
     modalForm: HTMLFormElement
   }
+  public dateFormat = 'YYYY-MM-DD'
   private visible = false
+  private isEdit = false
   private title = '新增'
-  // private validateInstall = (rule: any, value: any) => {
-  //   let manufacturedate =
-  //     this.formItem.manufacturedate && this.formItem.manufacturedate.valueOf()
-  //   if (manufacturedate > value.valueOf()) {
-  //     return Promise.reject('安装日期不可在生产日期之前')
-  //   }
-
-  //   return Promise.resolve()
-  // }
-  // private validateManufact = (rule: any, value: any) => {
-  //   let installdate =
-  //     this.formItem.installdate && this.formItem.installdate.valueOf()
-  //   if (installdate && installdate < value.valueOf()) {
-  //     return Promise.reject('生产日期不可在安装日期之后')
-  //   }
-  //   return Promise.resolve()
-  // }
-
-  private rules = {
-    meaternum: [
-      {
-        required: true,
-        message: '电表编号不能为空',
-        trigger: 'blur',
-      },
-    ],
-    manufacturedate: [
-      {
-        // validator: this.validateManufact,
-        trigger: 'change',
-      },
-    ],
-  }
 
   private formItem: FormItems = {
     id: '',
@@ -270,29 +241,94 @@ export default class MeterForm extends Vue {
     anlh: '',
   }
   private formItemCopy: FormItems = {}
+  private rules = {
+    meaternum: [
+      {
+        required: true,
+        message: '电表编号不能为空',
+        trigger: 'blur',
+      },
+    ],
+    manufacturedate: [
+      {
+        // eslint-disable-next-line space-before-function-paren
+        validator: async (rule: any, value: any) => {
+          let installdate = this.formItem.installdate.valueOf()
+          console.log('校验测试 ', installdate)
+          if (installdate < value.valueOf()) {
+            return Promise.reject('生产日期不可在安装日期之后')
+          }
+
+          return Promise.resolve()
+        },
+        trigger: 'change',
+      },
+    ],
+    installdate: [
+      {
+        // eslint-disable-next-line space-before-function-paren
+        validator: async (rule: any, value: any) => {
+          let manufacturedate =
+            this.formItem.manufacturedate &&
+            this.formItem.manufacturedate.valueOf()
+          if (manufacturedate && manufacturedate > value.valueOf()) {
+            return Promise.reject('安装日期不可在生产日期之前')
+          }
+          return Promise.resolve()
+        },
+        trigger: 'change',
+      },
+    ],
+    address: [
+      {
+        required: true,
+        message: '用电地址不能为空',
+        trigger: 'blur',
+      },
+    ],
+  }
   public show(data: any) {
     this.formItemCopy = Object.assign(this.formItem, {})
     console.log('MeterForm -> show -> data', data)
     this.visible = true
+    this.isEdit = false
     if (data) {
       for (const key of Object.keys(this.formItem)) {
         this.formItem[key] = data[key]
       }
       this.title = '编辑'
+      this.isEdit = true
     } else {
       this.formItem = Object.assign(this.formItemCopy, {})
-      this.formItem.manufacturedate = this.$moment(new Date()).format(
-        'YYYY-MM-DD',
-      )
-      this.formItem.installdate = this.$moment(new Date()).format('YYYY-MM-DD')
+      this.formItem.manufacturedate = this.$moment(new Date())
+      this.formItem.installdate = this.$moment(new Date())
     }
   }
 
   private handleOk() {
-    console.log('submit', this.formItem)
-
-    this.visible = false
-    this.$refs.modalForm.resetFields()
+    this.$refs.modalForm
+      .validate()
+      .then(() => {
+        console.log('values', this.formItem)
+        let formItem = Object.assign({}, this.formItem)
+        this.$emit(
+          'submit-form',
+          {
+            formItem,
+            isEdit: this.isEdit,
+          },
+          (data: any) => {
+            if (data.resultCode === 200) {
+              this.visible = false
+              this.$refs.modalForm.resetFields()
+            }
+            // this.$Loading.finish()
+          },
+        )
+      })
+      .catch((error: any) => {
+        console.log('error', error)
+      })
   }
   private handleCancel() {
     this.$refs.modalForm.resetFields()

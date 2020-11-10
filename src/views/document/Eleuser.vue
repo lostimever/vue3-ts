@@ -2,26 +2,38 @@
   <div>
     <div class="opt">
       <a-form :model="form" layout="inline" ref="forms" :locale="locale">
-        <a-form-item label="电表编号" name="meaternum">
+        <a-form-item label="企业名称" name="companyname">
           <a-input
-            v-model:value="form.meaternum"
-            placeholder="请输入电表编号"
+            v-model:value="form.companyname"
+            placeholder="请输入企业名称"
           />
         </a-form-item>
-        <a-form-item label="制造商" name="manufacturer">
-          <a-input
-            v-model:value="form.manufacturer"
-            placeholder="请输入制造商"
-          />
+        <a-form-item label="用电户号" name="elecnum">
+          <a-input v-model:value="form.elecnum" placeholder="请输入用电户号" />
         </a-form-item>
-        <a-form-item label="电表类型" name="meatertype">
+        <a-form-item label="用电类别" name="ecat">
           <a-select
-            v-model:value="form.meatertype"
-            placeholder="请选择电表类型"
+            v-model:value="form.ecat"
+            placeholder="请选择用电类别"
             style="width: 174px"
           >
             <a-select-option
-              v-for="item in meterType"
+              v-for="item in execUserType.filter(item => item.id !== 1)"
+              :value="item.id"
+              :key="item.name"
+            >
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="电价执行方式" name="calcplay">
+          <a-select
+            v-model:value="form.calcplay"
+            placeholder="请选择电价执行方式"
+            style="width: 174px"
+          >
+            <a-select-option
+              v-for="item in calcplay"
               :value="item.id"
               :key="item.name"
             >
@@ -50,11 +62,11 @@
       :rowKey="columnId"
       :loading="tableLoading"
     >
-      <template v-slot:meatertype="{ text }">
-        <span>{{ getMeterTypeName(text) }}</span>
+      <template v-slot:ecat="{ text }">
+        <span>{{ getExecUserTypeName(text) }}</span>
       </template>
-      <template v-slot:voltype="{ text }">
-        <span>{{ getVolTypeName(text) }}</span>
+      <template v-slot:calcplay="{ text }">
+        <span>{{ getCalcplayName(text) }}</span>
       </template>
       <template #action="{ record  }" class="opt">
         <a-button type="primary" @click="openModal(record)">
@@ -66,23 +78,31 @@
       </template>
     </a-table>
   </div>
-  <meter-form ref="meter" @submit-form="submit"></meter-form>
+  <ele-user-form ref="user" @submit-form="submit"></ele-user-form>
 </template>
 
 <script lang="ts">
 import { Options, Vue, setup } from 'vue-class-component'
 import { ref, reactive, onBeforeUpdate } from 'vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import MeterForm from '@/components/document/MeterForm.vue'
+import EleUserForm from '@/components/document/EleUserForm.vue'
 
 @Options({
-  components: { MeterForm },
+  components: { EleUserForm },
   computed: {
     ...mapState('dictionary', {
-      meterType: (state: any) => state.meterType,
       volType: (state: any) => state.volType,
+      calcplay: (state: any) => state.calcplay,
+      companyType: (state: any) => state.companyType,
+      execUserType: (state: any) => state.execUserType,
+      payType: (state: any) => state.payType,
     }),
-    ...mapGetters('dictionary', ['getMeterTypeName', 'getVolTypeName']),
+    ...mapGetters('dictionary', [
+      'getVolTypeName',
+      'getCalcplayName',
+      'getExecUserTypeName',
+      'getCompanyTypeName',
+    ]),
   },
   provide() {
     // return {
@@ -102,75 +122,73 @@ import MeterForm from '@/components/document/MeterForm.vue'
 export default class EleMeter extends Vue {
   public $refs!: {
     forms: HTMLFormElement
-    meter: HTMLFormElement
+    user: HTMLFormElement
   }
   private tableLoading = false
   private columns = [
     {
-      title: '电表编号',
-      key: 'meaternum',
-      width: 220,
-      dataIndex: 'meaternum',
-      align: 'center',
+      title: '企业名称',
+      key: 'companyname',
+      dataIndex: 'companyname',
+      width: 250,
+      fixed: 'left',
     },
     {
-      title: '资产编号',
-      key: 'anlh',
-      dataIndex: 'anlh',
-      align: 'center',
-      width: 150,
+      title: '用电户号',
+      key: 'elecnum',
+      dataIndex: 'elecnum',
+      // fixed: 'left',
+      width: 115,
     },
     {
-      title: '安装日期',
-      key: 'installdate',
-      dataIndex: 'installdate',
-      align: 'center',
-      width: 150,
-      // slot: {
-      //   customRender: 'installdate',
-      // },
+      title: '联系人',
+      key: 'contactp',
+      dataIndex: 'contactp',
+      width: 180,
     },
     {
-      title: '生产日期',
-      key: 'manufacturedate',
-      dataIndex: 'manufacturedate',
-      align: 'center',
-      width: 150,
-      // slot: {
-      //   customRender: 'manufacturedate',
-      // },
+      title: '联系人手机',
+      key: 'phone',
+      dataIndex: 'phone',
+      width: 125,
     },
     {
-      title: '电表类型',
-      key: 'meatertype',
-      dataIndex: 'meatertype',
+      title: '用电类别',
+      key: 'ecat',
+      dataIndex: 'ecat',
       slots: {
-        customRender: 'meatertype',
+        customRender: 'ecat',
       },
-      align: 'center',
-      width: 150,
+      width: 165,
     },
     {
-      title: '电压等级',
-      key: 'voltype',
-      dataIndex: 'voltype',
+      title: '电价执行方式',
+      key: 'calcplay',
+      dataIndex: 'calcplay',
       slots: {
-        customRender: 'voltype',
+        customRender: 'calcplay',
       },
+      width: 125,
+    },
+    {
+      title: '账户余额',
+      key: 'balance',
+      dataIndex: 'balance',
+      width: 100,
       align: 'center',
-      width: 120,
     },
     {
       title: '用电地址',
-      key: 'address',
-      dataIndex: 'address',
-      // width: 450,
+      key: 'elecaddr',
+      dataIndex: 'elecaddr',
+      width: 600,
     },
     {
       title: '操作',
       key: 'operation',
       width: 200,
       align: 'center',
+      fixed: 'right',
       slots: { customRender: 'action' },
     },
   ]
@@ -185,15 +203,18 @@ export default class EleMeter extends Vue {
   private recordData = []
 
   private urls = {
-    query: '/dmsmarket/meaters/queryall',
-    add: '/dmsmarket/meaters/add',
-    del: '/dmsmarket/meaters/del',
-    mod: '/dmsmarket/meaters/mod',
+    query: '/dmsmarket/elecusers/queryall',
+    add: '/dmsmarket/elecusers/add',
+    del: '/dmsmarket/elecusers/del',
+    mod: '/dmsmarket/elecusers/mod',
   }
   private form = {
-    meaternum: '',
-    manufacturer: '',
-    meatertype: undefined,
+    companyname: '',
+    elecnum: '',
+    companytype: undefined,
+    ecat: undefined,
+    calcplay: undefined,
+    voltype: undefined,
   }
 
   public mounted() {
@@ -246,7 +267,7 @@ export default class EleMeter extends Vue {
   }
 
   private openModal(record: any) {
-    this.$refs.meter.show(record)
+    this.$refs.user.show(record)
   }
   private remove(id: number) {
     this.axios

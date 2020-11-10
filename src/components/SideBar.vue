@@ -3,7 +3,8 @@
     <a-menu
       theme="dark"
       mode="inline"
-      v-model:selectedKeys="selectedKeys"
+      v-model:selectedKeys="onRoutes"
+      v-model:openKeys="openMenu"
       @click="checkMenu"
     >
       <a-menu-item key="work">
@@ -53,20 +54,31 @@ import {
     MenuFoldOutlined,
     MailOutlined,
   },
+  computed: {
+    onRoutes() {
+      // let path = this.$route.path.replace('/', '')
+      // path = /[^/]*$/.exec(path)[0]
+
+      return [this.$route.name.includes('work') ? 'work' : this.$route.name]
+    },
+    openMenu() {
+      return ['document']
+    },
+  },
   data() {
     return {
+      rootSubmenuKeys: ['document'],
       // collapsed: false,
-      selectedKeys: ['work'],
+      // selectedKeys: ['work'],
     }
   },
 })
 export default class SideBar extends Vue {
   // private collapsed: boolean
-  // private checkMenu(item: any): void {
-  //   console.log('ceshi', item.key)
-  // }
+
   private checkMenu({ key }: any): void {
-    console.log('ceshi', key)
+    // this.activeName = key
+    this.$router.push({ name: key })
   }
 }
 </script>
