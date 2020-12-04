@@ -5,10 +5,10 @@ services:
   - docker
 
 before_install:
-  - npm install
+  - yarn install
 
 script:
-  - npm run build
+  - yarn build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t lostimever/vue3-ts:latest .
   - docker push lostimever/vue3-ts:latest
