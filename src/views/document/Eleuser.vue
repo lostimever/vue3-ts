@@ -222,9 +222,9 @@ export default class EleMeter extends Vue {
   }
   protected submit({ formItem, isEdit }: any, callback: typeof Function) {
     let url = isEdit ? this.urls.mod : this.urls.add
-    this.axios.post(url, formItem).then((data: any) => {
+    this.$axios.post(url, formItem).then((data: any) => {
       if (data && data.resultCode === 200) {
-        this.getData()
+        this.getRecordData()
         this.$Message.success('提交成功')
       } else {
         this.$Message.error(`提交失败，${data.message}`)
@@ -270,7 +270,7 @@ export default class EleMeter extends Vue {
     this.$refs.user.show(record)
   }
   private remove(id: number) {
-    this.axios
+    this.$axios
       .get(this.urls.del, {
         params: {
           id,
