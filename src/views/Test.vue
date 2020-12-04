@@ -51,15 +51,15 @@ interface FormItems {
   [index: number]: any
 }
 
-function formData() {
-  const meaternum = ref(1)
-  onMounted(() => {
-    console.log('formData===>onMounted')
-  })
-  return {
-    meaternum,
-  }
-}
+// function formData() {
+//   const meaternum = ref(1)
+//   onMounted(() => {
+//     console.log('formData===>onMounted')
+//   })
+//   return {
+//     meaternum,
+//   }
+// }
 
 @Options({
   computed: {
@@ -81,21 +81,21 @@ function formData() {
   // },
 })
 export default class MeterForm extends Vue {
-  public setup() {
-    return { formItem: formData() }
-  }
   // public formItem = setup(() => formData())
+  // public setup() {
+  //   return { formItem: formData() }
+  // }
   // public $refs!: {
   //   modalForm: HTMLFormElement
   // }
   // private visible = false
   // private title = '新增'
   // private rules = {}
-  // private formItem: FormItems = {
-  //   id: '',
-  //   meaternum: '',
-  //   manufacturer: '',
-  // }
+  private formItem: FormItems = {
+    id: '',
+    meaternum: '',
+    manufacturer: '',
+  }
   public show(data: any) {
     // this.visible = true
     this.formItem.meaternum = 3

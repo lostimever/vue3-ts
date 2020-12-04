@@ -3,12 +3,17 @@ node_js:
   - '12'
 services:
   - docker
+  # Travis-CI Caching
+cache:
+  yarn: true
+  directories:
+    - node_modules # 缓存node_modules文档夹
 
 before_install:
-  - npm install
+  - yarn install
 
 script:
-  - npm run build
+  - yarn build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t lostimever/vue3-ts:latest .
   - docker push lostimever/vue3-ts:latest

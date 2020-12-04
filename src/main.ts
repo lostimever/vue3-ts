@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import antd from './plugins/antd'
 import axios from './plugins/axios'
-import moment from 'moment'
+import * as moment from 'moment'
 moment.locale('zh-cn')
 
 const app = createApp(App)
