@@ -569,7 +569,7 @@ export default class MeterForm extends Vue {
   }
   public show(data: any) {
     this.formItemCopy = Object.assign(this.formItem, {})
-    console.log('MeterForm -> show -> data', data)
+    // console.log('MeterForm -> show -> data', data)
     this.visible = true
     this.isEdit = false
     if (data) {
@@ -589,7 +589,7 @@ export default class MeterForm extends Vue {
     this.$refs.modalForm
       .validate()
       .then(() => {
-        console.log('values', this.formItem)
+        // console.log('values', this.formItem)
         let formItem = Object.assign({}, this.formItem)
         this.$emit(
           'submit-form',
@@ -607,7 +607,7 @@ export default class MeterForm extends Vue {
         )
       })
       .catch((error: any) => {
-        console.log('error', error)
+        // console.log('error', error)
       })
   }
   private handleCancel() {

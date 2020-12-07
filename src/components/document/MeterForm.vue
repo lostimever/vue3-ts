@@ -254,7 +254,7 @@ export default class MeterForm extends Vue {
         // eslint-disable-next-line space-before-function-paren
         validator: async (rule: any, value: any) => {
           let installdate = this.formItem.installdate.valueOf()
-          console.log('校验测试 ', installdate)
+          // console.log('校验测试 ', installdate)
           if (installdate < value.valueOf()) {
             return Promise.reject('生产日期不可在安装日期之后')
           }
@@ -289,7 +289,7 @@ export default class MeterForm extends Vue {
   }
   public show(data: any) {
     this.formItemCopy = Object.assign(this.formItem, {})
-    console.log('MeterForm -> show -> data', data)
+    // console.log('MeterForm -> show -> data', data)
     this.visible = true
     this.isEdit = false
     if (data) {
@@ -309,7 +309,7 @@ export default class MeterForm extends Vue {
     this.$refs.modalForm
       .validate()
       .then(() => {
-        console.log('values', this.formItem)
+        // console.log('values', this.formItem)
         let formItem = Object.assign({}, this.formItem)
         this.$emit(
           'submit-form',
@@ -327,7 +327,7 @@ export default class MeterForm extends Vue {
         )
       })
       .catch((error: any) => {
-        console.log('error', error)
+        // console.log('error', error)
       })
   }
   private handleCancel() {

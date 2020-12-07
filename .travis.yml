@@ -9,6 +9,10 @@ cache:
   directories:
     - node_modules # 缓存node_modules文档夹
 
+branches:
+  only:
+    - master
+
 before_install:
   - yarn install
 
