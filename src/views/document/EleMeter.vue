@@ -84,20 +84,8 @@ import MeterForm from '@/components/document/MeterForm.vue'
     }),
     ...mapGetters('dictionary', ['getMeterTypeName', 'getVolTypeName']),
   },
-  provide() {
-    // return {
-    //   meterType: '11111',
-    // }
-  },
+  // provide() {},
   inject: ['locale'],
-
-  // setup() {
-  //   const forms = ref()
-  //   console.log('setup -> forms', forms)
-  //   return {
-  //     forms,
-  //   }
-  // },
 })
 export default class EleMeter extends Vue {
   public $refs!: {

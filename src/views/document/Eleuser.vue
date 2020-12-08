@@ -104,20 +104,8 @@ import EleUserForm from '@/components/document/EleUserForm.vue'
       'getCompanyTypeName',
     ]),
   },
-  provide() {
-    // return {
-    //   meterType: '11111',
-    // }
-  },
-  inject: ['locale'],
 
-  // setup() {
-  //   const forms = ref()
-  //   console.log('setup -> forms', forms)
-  //   return {
-  //     forms,
-  //   }
-  // },
+  inject: ['locale'],
 })
 export default class EleMeter extends Vue {
   public $refs!: {

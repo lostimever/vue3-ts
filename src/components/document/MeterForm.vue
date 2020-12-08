@@ -327,7 +327,7 @@ export default class MeterForm extends Vue {
         )
       })
       .catch((error: any) => {
-        // console.log('error', error)
+        console.log('error', error)
       })
   }
   private handleCancel() {
