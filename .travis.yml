@@ -15,6 +15,7 @@ branches:
     - master
 before_install:
   - openssl aes-256-cbc -K $encrypted_a61bf7cd320c_key -iv $encrypted_a61bf7cd320c_iv -in authorized_keys.enc -out ~/.ssh/authorized_keys -d
+  - chmod 600 ~/.ssh/authorized_keys
 install:
   - yarn install
 script:
@@ -23,5 +24,4 @@ script:
   - docker build -t lostimever/vue3-ts:latest .
   - docker push lostimever/vue3-ts:latest
 after_success:
-  - chmod 600 ~/.ssh/authorized_keys
   - ssh -o "StrictHostKeyChecking no" -i ~/.ssh/authorized_keys -p $server_port root@$server_ip "cd /wlf/dockerfiles/vue3-ts;docker-compose pull info;docker-compose stop info;docker-compose rm info;docker-compose up -d info;exit"
