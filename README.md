@@ -1,4 +1,4 @@
-# 后台管理系统模板
+# 后台管理系统模板 [![Build Status](https://www.travis-ci.org/lostimever/vue3-ts.svg?branch=master)](https://www.travis-ci.org/lostimever/vue3-ts)
 
 打算用`vue3+typescript+vuex+antd-design-vue`做一个后台管理系统模板
 对于目前来说，跨度有点大，有点难度
