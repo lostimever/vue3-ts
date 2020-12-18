@@ -53,7 +53,7 @@ import SideBar from '@/components/SideBar.vue'
   // },
   methods: { ...mapActions('dictionary', ['GET_DICTIONARY']) },
   mounted() {
-    console.log('🚀 ~ file: Home.vue ~ 自动化部署成功！')
+    // console.log('🚀 ~ file: Home.vue ~ 自动化部署成功！')
     this.GET_DICTIONARY()
   },
 })

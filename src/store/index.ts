@@ -4,32 +4,14 @@ import {
   CommitOptions,
   DispatchOptions,
 } from 'vuex'
+import VuexPersistence from 'vuex-persist'
 import modules from './modules/modules.index'
 
-export default createStore({
-  // state: {},
-  // mutations: {},
-  // actions: {},
-  modules,
+const vuexLocal = new VuexPersistence({
+  storage: window.sessionStorage,
 })
 
-// export type Store = Omit<
-//   VuexStore<State>,
-//   'getters' | 'commit' | 'dispatch'
-// > & {
-//   commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
-//     key: K,
-//     payload: P,
-//     options?: CommitOptions,
-//   ): ReturnType<Mutations[K]>,
-// } & {
-//   dispatch<K extends keyof Actions>(
-//     key: K,
-//     payload: Parameters<Actions[K]>[1],
-//     options?: DispatchOptions,
-//   ): ReturnType<Actions[K]>,
-// } & {
-//   getters: {
-//     [K in keyof Getters]: ReturnType<Getters[K]>
-//   },
-// }
+export default createStore({
+  modules,
+  plugins: [vuexLocal.plugin],
+})

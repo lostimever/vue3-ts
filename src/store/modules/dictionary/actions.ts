@@ -4,13 +4,14 @@ import { Mutations, LoadData } from './mutations'
 import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutations-types'
 
-const allDicUrl = '/dmsmarket/publics/dictionaryAll'
+const allDicUrl = '/api/dictionary/query'
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
     key: K,
     LoadData: Parameters<Mutations[K]>[1],
-  ): ReturnType<Mutations[K]>
+  ): // tslint:disable-next-line:trailing-comma
+  ReturnType<Mutations[K]>
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export interface Actions {

@@ -90,6 +90,7 @@ import MeterForm from '@/components/document/MeterForm.vue'
 export default class EleMeter extends Vue {
   public $refs!: {
     forms: HTMLFormElement
+    // eslint-disable-next-line prettier/prettier
     meter: HTMLFormElement
   }
   private tableLoading = false
@@ -173,8 +174,8 @@ export default class EleMeter extends Vue {
   private recordData = []
 
   private urls = {
-    query: '/dmsmarket/meaters/queryall',
-    add: '/dmsmarket/meaters/add',
+    query: '/api/elecMeterInfo/query',
+    add: '/api/elecMeterInfo/add',
     del: '/dmsmarket/meaters/del',
     mod: '/dmsmarket/meaters/mod',
   }
@@ -210,14 +211,14 @@ export default class EleMeter extends Vue {
       .get(this.urls.query, {
         params: {
           ...formItem,
-          page: this.pagination.current,
-          rows: this.pagination.pageSize,
+          pageIndex: this.pagination.current,
+          pageSize: this.pagination.pageSize,
         },
       })
       .then((data: any) => {
         if (data && data.resultCode === 200) {
-          this.recordData = data.data.rows
-          this.pagination.total = data.data.total
+          this.recordData = data.data
+          this.pagination.total = data.totalCount
         } else {
           this.$Message.error('请求失败')
         }
