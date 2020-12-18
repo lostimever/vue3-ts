@@ -25,4 +25,4 @@ script:
   - docker push lostimever/vue3-ts:latest
 after_success:
   - chmod 600 ~/.ssh/id_rsa
-  - ssh -o "StrictHostKeyChecking no" -p $server_port travis@$server_ip "cd /project/dockerfiles/vue3-ts;docker-compose pull info;docker-compose stop info;docker-compose rm info;docker-compose up -d info;exit"
+  - ssh -o "StrictHostKeyChecking no" -p $server_port travis@$server_ip "cd /project/dockerfiles/vue3-ts;docker-compose pull info;docker-compose stop info;docker-compose rm -f info;docker-compose up -d info;exit"
