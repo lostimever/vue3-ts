@@ -60,7 +60,7 @@
         <a-button type="primary" @click="openModal(record)">
           编辑
         </a-button>
-        <a-button type="danger" @click="remove(record.id)">
+        <a-button type="danger" @click="remove(record)">
           删除
         </a-button>
       </template>
@@ -176,8 +176,8 @@ export default class EleMeter extends Vue {
   private urls = {
     query: '/api/elecMeterInfo/query',
     add: '/api/elecMeterInfo/add',
-    del: '/dmsmarket/meaters/del',
-    mod: '/dmsmarket/meaters/mod',
+    del: '/api/elecMeterInfo/remove',
+    mod: '/api/elecMeterInfo/update',
   }
   private form = {
     meaternum: '',
@@ -195,7 +195,7 @@ export default class EleMeter extends Vue {
         this.getRecordData()
         this.$Message.success('提交成功')
       } else {
-        this.$Message.error(`提交失败，${data.message}`)
+        this.$Message.error(`提交失败，${data.msg}`)
       }
       callback(data)
     })
@@ -237,11 +237,11 @@ export default class EleMeter extends Vue {
   private openModal(record: any) {
     this.$refs.meter.show(record)
   }
-  private remove(id: number) {
+  private remove({ _id }: any) {
     this.$axios
       .get(this.urls.del, {
         params: {
-          id,
+          _id,
         },
       })
       .then((data: any) => {
@@ -249,7 +249,7 @@ export default class EleMeter extends Vue {
           this.getRecordData()
           this.$Message.success('删除成功')
         } else {
-          this.$Message.error('删除失败')
+          this.$Message.error(`删除失败，${data.msg}`)
         }
       })
   }

@@ -332,7 +332,7 @@ interface FormItems {
 }
 function formData() {
   const meaternum = ref('')
-  const id = ref('')
+  const _id = ref(null)
   const elecnum = ref('')
   const companyname = ref('')
   const contactp = ref('')
@@ -357,7 +357,7 @@ function formData() {
   const paytype = ref(1)
   const querypwd = ref('')
   return {
-    id,
+    _id,
     elecnum,
     meaternum,
     companyname,
@@ -523,6 +523,7 @@ export default class MeterForm extends Vue {
   public formItem: FormItems = setup(() => formData())
   public rulesRef = setup(() => formRules())
   public $refs!: {
+    // eslint-disable-next-line prettier/prettier
     modalForm: HTMLFormElement
   }
   public dateFormat = 'YYYY-MM-DD'
@@ -557,7 +558,7 @@ export default class MeterForm extends Vue {
   //   paytype: 1,
   //   querypwd: '',
   // }
-  private formItemCopy: FormItems = {}
+  // private formItemCopy: FormItems = {}
   private rules = {
     meaternum: [
       {
@@ -568,20 +569,17 @@ export default class MeterForm extends Vue {
     ],
   }
   public show(data: any) {
-    this.formItemCopy = Object.assign(this.formItem, {})
-    // console.log('MeterForm -> show -> data', data)
     this.visible = true
-    this.isEdit = false
+    this.isEdit = data ? true : false
+    this.formTitle = this.isEdit ? '编辑' : '新增'
+    this.formItem._id = null
+
     if (data) {
-      for (const key of Object.keys(this.formItem)) {
-        this.formItem[key] = data[key]
-      }
-      this.title = '编辑'
-      this.isEdit = true
-    } else {
-      this.formItem = Object.assign(this.formItemCopy, {})
-      this.formItem.manufacturedate = this.$moment(new Date())
-      this.formItem.installdate = this.$moment(new Date())
+      this.$nextTick(() => {
+        for (const key of Object.keys(this.formItem)) {
+          this.formItem[key] = data[key]
+        }
+      })
     }
   }
 

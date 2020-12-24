@@ -214,8 +214,8 @@ interface FormItems {
   inject: ['locale'],
 })
 export default class MeterForm extends Vue {
-  // public formItem = setup(() => formData())
   public $refs!: {
+    // eslint-disable-next-line prettier/prettier
     modalForm: HTMLFormElement
   }
   public dateFormat = 'YYYY-MM-DD'
@@ -224,11 +224,11 @@ export default class MeterForm extends Vue {
   private title = '新增'
 
   private formItem: FormItems = {
-    id: '',
+    _id: null,
     meaternum: '',
     manufacturer: '',
-    manufacturedate: new Date(),
-    installdate: new Date(),
+    manufacturedate: null,
+    installdate: null,
     meatertype: 1,
     voltype: 1,
     frequency: 0,
@@ -240,7 +240,7 @@ export default class MeterForm extends Vue {
     address: '',
     anlh: '',
   }
-  private formItemCopy: FormItems = {}
+  // private formItemCopy: FormItems = {}
   private rules = {
     meaternum: [
       {
@@ -288,20 +288,22 @@ export default class MeterForm extends Vue {
     ],
   }
   public show(data: any) {
-    this.formItemCopy = Object.assign(this.formItem, {})
+    // this.formItemCopy = Object.assign({}, this.formItem)
     // console.log('MeterForm -> show -> data', data)
     this.visible = true
-    this.isEdit = false
+    this.isEdit = data ? true : false
+    this.formTitle = this.isEdit ? '编辑' : '新增'
+    this.formItem._id = null
     if (data) {
-      for (const key of Object.keys(this.formItem)) {
-        this.formItem[key] = data[key]
-      }
-      this.title = '编辑'
-      this.isEdit = true
-    } else {
-      this.formItem = Object.assign(this.formItemCopy, {})
-      this.formItem.manufacturedate = this.$moment(new Date())
-      this.formItem.installdate = this.$moment(new Date())
+      this.$nextTick(() => {
+        for (const key of Object.keys(this.formItem)) {
+          this.formItem[key] = data[key]
+        }
+        this.formItem.manufacturedate = this.$moment(
+          this.formItem.manufacturedate,
+        )
+        this.formItem.installdate = this.$moment(this.formItem.installdate)
+      })
     }
   }
 
@@ -327,12 +329,11 @@ export default class MeterForm extends Vue {
         )
       })
       .catch((error: any) => {
-        console.log('error', error)
+        // console.log('error', error)
       })
   }
   private handleCancel() {
     this.$refs.modalForm.resetFields()
-    // console.log('cancel', this.formItem)
     this.visible = false
   }
 }

@@ -110,6 +110,7 @@ import EleUserForm from '@/components/document/EleUserForm.vue'
 export default class EleMeter extends Vue {
   public $refs!: {
     forms: HTMLFormElement
+    // eslint-disable-next-line prettier/prettier
     user: HTMLFormElement
   }
   private tableLoading = false
@@ -125,7 +126,6 @@ export default class EleMeter extends Vue {
       title: '用电户号',
       key: 'elecnum',
       dataIndex: 'elecnum',
-      // fixed: 'left',
       width: 115,
     },
     {
@@ -191,10 +191,10 @@ export default class EleMeter extends Vue {
   private recordData = []
 
   private urls = {
-    query: '/dmsmarket/elecusers/queryall',
-    add: '/dmsmarket/elecusers/add',
-    del: '/dmsmarket/elecusers/del',
-    mod: '/dmsmarket/elecusers/mod',
+    query: '/api/elecuser/query',
+    add: '/api/elecuser/add',
+    del: '/api/elecuser/remove',
+    mod: '/api/elecuser/update',
   }
   private form = {
     companyname: '',
@@ -226,19 +226,19 @@ export default class EleMeter extends Vue {
 
   private getRecordData() {
     this.tableLoading = true
-    let formItem = this.form
+    let formItem = Object.assign({}, this.form)
     this.$axios
       .get(this.urls.query, {
         params: {
           ...formItem,
-          page: this.pagination.current,
-          rows: this.pagination.pageSize,
+          pageIndex: this.pagination.current,
+          pageSize: this.pagination.pageSize,
         },
       })
       .then((data: any) => {
         if (data && data.resultCode === 200) {
-          this.recordData = data.data.rows
-          this.pagination.total = data.data.total
+          this.recordData = data.data
+          this.pagination.total = data.totalCount
         } else {
           this.$Message.error('请求失败')
         }
