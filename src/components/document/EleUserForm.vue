@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    :title="title"
+    :title="formTitle"
     v-model:visible="visible"
     @ok="handleOk"
     width="780px"
@@ -67,7 +67,6 @@
             <a-input
               v-model:value="formItem.transforcap"
               placeholder="请输入变压器容量"
-              number
             >
               <template v-slot:suffix>
                 <span>KVA</span>
@@ -99,7 +98,6 @@
             <a-input
               v-model:value="formItem.indcomregauthor"
               placeholder="请输入工商注册机关"
-              number
             >
             </a-input>
           </a-form-item>
@@ -109,7 +107,6 @@
             <a-input
               v-model:value="formItem.legalp"
               placeholder="请输入法定代表人"
-              number
             >
             </a-input>
           </a-form-item>
@@ -121,7 +118,6 @@
             <a-input
               v-model:value="formItem.contactp"
               placeholder="请输入联系人"
-              number
             >
             </a-input>
           </a-form-item>
@@ -131,7 +127,6 @@
             <a-input
               v-model:value="formItem.userabbreviation"
               placeholder="请输入统一社会信用代码"
-              number
             />
           </a-form-item>
         </a-col>
@@ -142,7 +137,6 @@
             <a-input
               v-model:value="formItem.contactemail"
               placeholder="请输入联系人邮箱"
-              number
             />
           </a-form-item>
         </a-col>
@@ -151,7 +145,6 @@
             <a-input
               v-model:value="formItem.contacttel"
               placeholder="请输入办公电话"
-              number
             />
           </a-form-item>
         </a-col>
@@ -159,10 +152,10 @@
       <a-row>
         <a-col span="12">
           <a-form-item label="联系人手机" name="phone">
-            <a-input
+            <a-input-number
               v-model:value="formItem.phone"
               placeholder="请输入联系人手机"
-              number
+              style="width: 100%"
             />
           </a-form-item>
         </a-col>
@@ -244,11 +237,7 @@
         </a-col>
         <a-col span="12">
           <a-form-item label="待缴金额" name="bill">
-            <a-input
-              v-model:value="formItem.bill"
-              placeholder="请输入待缴金额"
-              number
-            >
+            <a-input v-model:value="formItem.bill" placeholder="请输入待缴金额">
               <template v-slot:suffix>
                 <span>元</span>
               </template>
@@ -262,7 +251,6 @@
             <a-input
               v-model:value="formItem.redpacket"
               placeholder="请输入红包余额"
-              number
             >
               <template v-slot:suffix>
                 <span>元</span>
@@ -272,11 +260,7 @@
         </a-col>
         <a-col span="12">
           <a-form-item label="积分" name="integral">
-            <a-input
-              v-model:value="formItem.integral"
-              placeholder="请输入积分"
-              number
-            >
+            <a-input v-model:value="formItem.integral" placeholder="请输入积分">
             </a-input>
           </a-form-item>
         </a-col>
@@ -453,10 +437,11 @@ function formRules() {
     {
       required: true,
       message: '联系人手机不能为空',
+      type: 'number',
       trigger: 'blur',
     },
     {
-      // validator: validatePhone,
+      validator: validatePhone,
       trigger: 'blur',
     },
   ]
@@ -524,12 +509,12 @@ export default class MeterForm extends Vue {
   public rulesRef = setup(() => formRules())
   public $refs!: {
     // eslint-disable-next-line prettier/prettier
-    modalForm: HTMLFormElement
+    modalForm: HTMLFormElement,
   }
   public dateFormat = 'YYYY-MM-DD'
   private visible = false
   private isEdit = false
-  private title = '新增'
+  private formTitle = '新增'
 
   // private formItem: FormItems = {
   //   id: '',

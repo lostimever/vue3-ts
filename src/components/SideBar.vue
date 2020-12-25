@@ -20,7 +20,7 @@
         </template>
         <a-menu-item key="elemeter">电表信息</a-menu-item>
         <a-menu-item key="eleuser">电力用户</a-menu-item>
-        <a-menu-item key="residents">居民用户</a-menu-item>
+        <a-menu-item key="comuser">居民用户</a-menu-item>
       </a-sub-menu>
       <!-- <a-menu-item key="2">
         <video-camera-outlined />

@@ -18,6 +18,11 @@ const routes: RouteRecordRaw[] = [
         name: 'eleuser',
         component: () => import('../views/document/Eleuser.vue'),
       },
+      {
+        path: '/comuser',
+        name: 'comuser',
+        component: () => import('../views/document/ComUser.vue'),
+      },
     ],
   },
   {

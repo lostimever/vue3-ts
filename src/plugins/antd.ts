@@ -6,6 +6,7 @@ import {
   ConfigProvider,
   DatePicker,
   Input,
+  InputNumber,
   Layout,
   Modal,
   Menu,
@@ -23,6 +24,7 @@ const ant = {
     app.use(ConfigProvider)
     app.use(DatePicker)
     app.use(Input)
+    app.use(InputNumber)
     app.use(Layout)
     app.use(Modal)
     app.use(Menu)

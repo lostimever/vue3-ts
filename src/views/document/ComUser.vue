@@ -2,29 +2,14 @@
   <div>
     <div class="opt">
       <a-form :model="form" layout="inline" ref="forms" :locale="locale">
-        <a-form-item label="企业名称" name="companyname">
-          <a-input
-            v-model:value="form.companyname"
-            placeholder="请输入企业名称"
-          />
-        </a-form-item>
         <a-form-item label="用电户号" name="elecnum">
           <a-input v-model:value="form.elecnum" placeholder="请输入用电户号" />
         </a-form-item>
-        <a-form-item label="用电类别" name="ecat">
-          <a-select
-            v-model:value="form.ecat"
-            placeholder="请选择用电类别"
-            style="width: 174px"
-          >
-            <a-select-option
-              v-for="item in execUserType.filter(item => item.id !== 1)"
-              :value="item.id"
-              :key="item.name"
-            >
-              {{ item.name }}
-            </a-select-option>
-          </a-select>
+        <a-form-item label="用户名称" name="username">
+          <a-input v-model:value="form.username" placeholder="请输入用户名称" />
+        </a-form-item>
+        <a-form-item label="用电地址" name="address">
+          <a-input v-model:value="form.address" placeholder="请输入用电地址" />
         </a-form-item>
         <a-form-item label="电价执行方式" name="calcplay">
           <a-select
@@ -116,38 +101,22 @@ export default class EleMeter extends Vue {
   private tableLoading = false
   private columns = [
     {
-      title: '企业名称',
-      key: 'companyname',
-      dataIndex: 'companyname',
-      width: 250,
-      fixed: 'left',
-    },
-    {
       title: '用电户号',
       key: 'elecnum',
       dataIndex: 'elecnum',
       width: 115,
+      fixed: 'left',
     },
     {
-      title: '联系人',
-      key: 'contactp',
-      dataIndex: 'contactp',
-      width: 180,
+      title: '用户名称',
+      key: 'username',
+      dataIndex: 'username',
     },
     {
       title: '联系人手机',
       key: 'phone',
       dataIndex: 'phone',
       width: 125,
-    },
-    {
-      title: '用电类别',
-      key: 'ecat',
-      dataIndex: 'ecat',
-      slots: {
-        customRender: 'ecat',
-      },
-      width: 165,
     },
     {
       title: '电价执行方式',
@@ -167,8 +136,8 @@ export default class EleMeter extends Vue {
     },
     {
       title: '用电地址',
-      key: 'elecaddr',
-      dataIndex: 'elecaddr',
+      key: 'address',
+      dataIndex: 'address',
       width: 600,
     },
     {
@@ -191,18 +160,16 @@ export default class EleMeter extends Vue {
   private recordData = []
 
   private urls = {
-    query: '/api/elecuser/query',
-    add: '/api/elecuser/add',
-    del: '/api/elecuser/remove',
-    mod: '/api/elecuser/update',
+    query: '/api/commonuser/query',
+    add: '/api/commonuser/add',
+    del: '/api/commonuser/remove',
+    mod: '/api/commonuser/update',
   }
   private form = {
-    companyname: '',
+    username: '',
     elecnum: '',
-    companytype: undefined,
-    ecat: undefined,
+    address: '',
     calcplay: undefined,
-    voltype: undefined,
   }
 
   public mounted() {

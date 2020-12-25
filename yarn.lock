@@ -1862,10 +1862,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.0.0-beta.15:
-  version "2.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-2.0.0-rc.4.tgz#1f3da62be4ff09760db16545c0cf7ab0c303a4dc"
-  integrity sha512-vKNbCYrd0wFdlGeSwyCotbG47g2f7u18wEuHMW9BSmwEh5Hluf6nu8q4An+4CJ6imwtG3bIHPC5wlGtCxLMkbg==
+ant-design-vue@^2.0.0-rc.4:
+  version "2.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-2.0.0-rc.5.tgz#cad07b4f9d8153cd399f1e374f438a2322b74b37"
+  integrity sha512-1gdMaSjxiYuqWvfUTW9kTEOXqxWjk7gjI5zWiCv24vJ9O04SvxWtZEY1Rfcp3FZJl37BP7LT1Ee1CdHTBk0/+A==
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^5.1.7"
