@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    :title="title"
+    :title="formTitle"
     v-model:visible="visible"
     @ok="handleOk"
     width="700px"
@@ -205,6 +205,7 @@ interface FormItems {
 }
 
 @Options({
+  emits: ['submit-form'],
   computed: {
     ...mapState('dictionary', {
       meterType: (state: any) => state.meterType,
@@ -221,7 +222,7 @@ export default class MeterForm extends Vue {
   public dateFormat = 'YYYY-MM-DD'
   private visible = false
   private isEdit = false
-  private title = '新增'
+  private formTitle = '新增'
 
   private formItem: FormItems = {
     _id: null,
@@ -288,8 +289,6 @@ export default class MeterForm extends Vue {
     ],
   }
   public show(data: any) {
-    // this.formItemCopy = Object.assign({}, this.formItem)
-    // console.log('MeterForm -> show -> data', data)
     this.visible = true
     this.isEdit = data ? true : false
     this.formTitle = this.isEdit ? '编辑' : '新增'
@@ -304,6 +303,11 @@ export default class MeterForm extends Vue {
         )
         this.formItem.installdate = this.$moment(this.formItem.installdate)
       })
+    } else {
+      this.$nextTick(() => {
+        this.formItem.manufacturedate = this.$moment(new Date())
+        this.formItem.installdate = this.$moment(new Date())
+      })
     }
   }
 
@@ -311,8 +315,11 @@ export default class MeterForm extends Vue {
     this.$refs.modalForm
       .validate()
       .then(() => {
-        // console.log('values', this.formItem)
         let formItem = Object.assign({}, this.formItem)
+        formItem.manufacturedate = this.$moment(
+          formItem.manufacturedate,
+        ).format(this.dateFormat)
+        formItem.installdate = this.$moment(new Date()).format(this.dateFormat)
         this.$emit(
           'submit-form',
           {

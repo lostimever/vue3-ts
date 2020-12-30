@@ -36,120 +36,13 @@
       </a-row>
       <a-row>
         <a-col :span="12">
-          <a-form-item label="企业名称" name="companyname">
+          <a-form-item label="用户名称" name="username">
             <a-input
-              v-model:value="formItem.companyname"
-              placeholder="请输入企业名称"
+              v-model:value="formItem.username"
+              placeholder="请输入用户名称"
             />
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label="企业类型" name="companytype">
-            <a-select
-              v-model:value="formItem.companytype"
-              placeholder="请选择企业类型"
-              style="width: 174px"
-            >
-              <a-select-option
-                v-for="item in companyType"
-                :value="item.id"
-                :key="item.name"
-              >
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="12">
-          <a-form-item label="变压器容量" name="transforcap">
-            <a-input
-              v-model:value="formItem.transforcap"
-              placeholder="请输入变压器容量"
-            >
-              <template v-slot:suffix>
-                <span>KVA</span>
-              </template>
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label="电压等级" name="voltype">
-            <a-select
-              v-model:value="formItem.voltype"
-              placeholder="请选择电压等级"
-              style="width: 174px"
-            >
-              <a-select-option
-                v-for="item in volType"
-                :value="item.id"
-                :key="item.name"
-              >
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-item label="工商注册机关" name="indcomregauthor">
-            <a-input
-              v-model:value="formItem.indcomregauthor"
-              placeholder="请输入工商注册机关"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-item label="法定代表人" name="legalp">
-            <a-input
-              v-model:value="formItem.legalp"
-              placeholder="请输入法定代表人"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-item label="联系人" name="contactp">
-            <a-input
-              v-model:value="formItem.contactp"
-              placeholder="请输入联系人"
-            >
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-item label="统一社会信用代码" name="userabbreviation">
-            <a-input
-              v-model:value="formItem.userabbreviation"
-              placeholder="请输入统一社会信用代码"
-            />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-item label="联系人邮箱" name="contactemail">
-            <a-input
-              v-model:value="formItem.contactemail"
-              placeholder="请输入联系人邮箱"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-item label="办公电话" name="contacttel">
-            <a-input
-              v-model:value="formItem.contacttel"
-              placeholder="请输入办公电话"
-            />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
         <a-col span="12">
           <a-form-item label="联系人手机" name="phone">
             <a-input-number
@@ -159,30 +52,13 @@
             />
           </a-form-item>
         </a-col>
-        <a-col span="12">
-          <a-form-item label="用电类别" name="ecat">
-            <a-select
-              v-model:value="formItem.ecat"
-              placeholder="请选择用电类别"
-              style="width: 174px"
-            >
-              <a-select-option
-                v-for="item in execUserType"
-                :value="item.id"
-                :key="item.name"
-              >
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-item label="企业注册地址：" name="usercomregaddr">
+          <a-form-item label="用电地址：" name="address">
             <a-input
-              v-model:value="formItem.usercomregaddr"
-              placeholder="请输入企业注册地址"
+              v-model:value="formItem.address"
+              placeholder="请输入用电地址"
             />
           </a-form-item>
         </a-col>
@@ -201,24 +77,6 @@
                 {{ item.name }}
               </a-select-option>
             </a-select>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-item label="通讯地址" name="contractaddr">
-            <a-input
-              v-model:value="formItem.contractaddr"
-              placeholder="请输入通讯地址"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-item label="用电地址" name="elecaddr">
-            <a-input
-              v-model:value="formItem.elecaddr"
-              placeholder="请输入用电地址"
-            />
           </a-form-item>
         </a-col>
       </a-row>
@@ -318,52 +176,28 @@ function formData() {
   const meaternum = ref('')
   const _id = ref(null)
   const elecnum = ref('')
-  const companyname = ref('')
-  const contactp = ref('')
+  const username = ref('')
   const phone = ref('')
-  const ecat = ref(2)
-  const elecaddr = ref('')
-  const voltype = ref(1)
-  const transforcap = ref('0')
-  const legalp = ref('')
-  const usercomregaddr = ref('')
   const calcplay = ref(1)
   const balance = ref('0')
   const bill = ref(0)
   const redpacket = ref(0)
   const integral = ref(0)
-  const companytype = ref(1)
-  const indcomregauthor = ref('')
-  const userabbreviation = ref('')
-  const contactemail = ref('')
-  const contacttel = ref('')
-  const contractaddr = ref('')
+  const address = ref('')
   const paytype = ref(1)
   const querypwd = ref('')
   return {
     _id,
     elecnum,
     meaternum,
-    companyname,
-    contactp,
+    username,
     phone,
-    ecat,
-    elecaddr,
-    voltype,
-    transforcap,
-    legalp,
-    usercomregaddr,
     calcplay,
     balance,
     bill,
     redpacket,
     integral,
-    companytype,
-    indcomregauthor,
-    userabbreviation,
-    contactemail,
-    contacttel,
-    contractaddr,
+    address,
     paytype,
     querypwd,
   }
@@ -411,10 +245,10 @@ function formRules() {
       trigger: 'blur',
     },
   ]
-  const companyname = [
+  const username = [
     {
       required: true,
-      message: '企业名称不能为空',
+      message: '用户名称不能为空',
       trigger: 'blur',
     },
   ]
@@ -445,15 +279,8 @@ function formRules() {
       trigger: 'blur',
     },
   ]
-  const ecat = [
-    {
-      required: true,
-      type: 'number',
-      message: '用电类别不能为空',
-      trigger: 'change',
-    },
-  ]
-  const elecaddr = [
+
+  const address = [
     {
       required: true,
       message: '用电地址不能为空',
@@ -481,12 +308,11 @@ function formRules() {
   return {
     meaternum,
     elecnum,
-    companyname,
+    username,
     companytype,
     contactp,
     phone,
-    ecat,
-    elecaddr,
+    address,
     balance,
     calcplay,
   }
@@ -496,10 +322,7 @@ function formRules() {
   emits: ['submit-form'],
   computed: {
     ...mapState('dictionary', {
-      volType: (state: any) => state.volType,
       calcplay: (state: any) => state.calcplay,
-      companyType: (state: any) => state.companyType,
-      execUserType: (state: any) => state.execUserType,
       payType: (state: any) => state.payType,
     }),
   },
@@ -510,7 +333,7 @@ export default class MeterForm extends Vue {
   public rulesRef = setup(() => formRules())
   public $refs!: {
     // eslint-disable-next-line prettier/prettier
-    modalForm: HTMLFormElement
+    modalForm: HTMLFormElement,
   }
   public dateFormat = 'YYYY-MM-DD'
   private visible = false

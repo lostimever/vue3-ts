@@ -3,7 +3,7 @@
     <a-menu
       theme="dark"
       mode="inline"
-      v-model:selectedKeys="onRoutes"
+      v-model:selectedKeys="myRoutes"
       v-model:openKeys="openMenu"
       @click="checkMenu"
     >
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import { Options, Vue, setup } from 'vue-class-component'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import {
   UserOutlined,
   VideoCameraOutlined,
@@ -44,6 +44,17 @@ import {
   MenuFoldOutlined,
   MailOutlined,
 } from '@ant-design/icons-vue'
+
+// function serRoutes() {
+//   const myRoutes = computed(() => [
+//     this.$route.name.includes('work') ? 'work' : this.$route.name,
+//   ])
+//   console.log(myRoutes)
+//   return {
+//     myRoutes,
+//   }
+// }
+
 @Options({
   props: ['collapsed'],
   components: {
@@ -55,10 +66,7 @@ import {
     MailOutlined,
   },
   computed: {
-    onRoutes() {
-      // let path = this.$route.path.replace('/', '')
-      // path = /[^/]*$/.exec(path)[0]
-
+    myRoutes() {
       return [this.$route.name.includes('work') ? 'work' : this.$route.name]
     },
     openMenu() {
@@ -68,16 +76,11 @@ import {
   data() {
     return {
       rootSubmenuKeys: ['document'],
-      // collapsed: false,
-      // selectedKeys: ['work'],
     }
   },
 })
 export default class SideBar extends Vue {
-  // private collapsed: boolean
-
   private checkMenu({ key }: any): void {
-    // this.activeName = key
     this.$router.push({ name: key })
   }
 }

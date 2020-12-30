@@ -63,17 +63,17 @@
       </template>
     </a-table>
   </div>
-  <ele-user-form ref="user" @submit-form="submit"></ele-user-form>
+  <com-user-form ref="user" @submit-form="submit"></com-user-form>
 </template>
 
 <script lang="ts">
 import { Options, Vue, setup } from 'vue-class-component'
 import { ref, reactive, onBeforeUpdate } from 'vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import EleUserForm from '@/components/document/EleUserForm.vue'
+import ComUserForm from '@/components/document/ComUserForm.vue'
 
 @Options({
-  components: { EleUserForm },
+  components: { ComUserForm },
   computed: {
     ...mapState('dictionary', {
       volType: (state: any) => state.volType,

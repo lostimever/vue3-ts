@@ -9,7 +9,6 @@ moment.locale('zh-cn')
 
 const app = createApp(App)
 app.config.globalProperties.$moment = moment
-
 app
   .use(axios)
   .use(antd)

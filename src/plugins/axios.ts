@@ -10,7 +10,7 @@ const defaultConfig = {
   timeout: 60 * 1000,
   // 跨域请求时是否需要凭证
   // withCredentials: true, // Check cross-site Access-Control
-  // heards: {
+  // headers: {
   //   get: {
   //     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
   //     // 将普适性的请求头作为基础配置。当需要特殊请求头时，将特殊请求头作为参数传入，覆盖基础配置

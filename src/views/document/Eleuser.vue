@@ -111,7 +111,7 @@ export default class EleMeter extends Vue {
   public $refs!: {
     forms: HTMLFormElement
     // eslint-disable-next-line prettier/prettier
-    user: HTMLFormElement
+    user: HTMLFormElement,
   }
   private tableLoading = false
   private columns = [
